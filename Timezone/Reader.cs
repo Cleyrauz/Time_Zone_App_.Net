@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace Timezone
 {
     public class Reader : IReader, IDisposable
     {
+        
 
         public List<Tuple<string, string>> Read(string fileName)
         {
@@ -18,6 +20,7 @@ namespace Timezone
             {
                 string[] fileParts = splitFileByLine(path);
                 lReturn = loadListOfTimes(fileParts);
+                lReturn = FilterInvalidTimeFormat(lReturn);
             }
 
             return lReturn;
@@ -52,6 +55,29 @@ namespace Timezone
 
             return File.Exists(fileName);
         }
+
+        public List<Tuple<string, string>> FilterInvalidTimeFormat(List<Tuple<string, string>> timeList)
+        {
+            List<Tuple<string, string>> lToReturn = new List<Tuple<string, string>>();
+            string emptyString = String.Empty;
+            DateTime dateTime;
+            foreach (Tuple<string, string> time in timeList)
+            {
+                try
+                {
+                    dateTime = Convert.ToDateTime(time.Item1);
+                    emptyString = dateTime.ToString("HH:mm");
+                    lToReturn.Add(time);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + time.Item1 + " is an invalid Time.");
+                }
+            }
+
+            return lToReturn;
+        }
+
 
         public void Dispose()
         {

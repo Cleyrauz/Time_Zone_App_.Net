@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Timezone;
+using System.Collections.Generic;
 
 namespace TimezoneTest
 {
@@ -54,7 +54,7 @@ namespace TimezoneTest
         {
             Reader reader = new Reader();
             string[] timesFromFile = { "09:30 Amsterdam", "17:29 Minsk", "23:03 Samoa" };
-            List<Tuple<string, string>> expectedList = new System.Collections.Generic.List<Tuple<string, string>>();
+            List<Tuple<string, string>> expectedList = new List<Tuple<string, string>>();
             expectedList.Add(new Tuple<string, string>("09:30", "Amsterdam"));
             expectedList.Add(new Tuple<string, string>("17:29", "Minsk"));
             expectedList.Add(new Tuple<string, string>("23:03", "Samoa"));
@@ -62,6 +62,22 @@ namespace TimezoneTest
             List<Tuple<string, string>> actual = reader.loadListOfTimes(timesFromFile);
 
             CollectionAssert.AreEqual(expectedList, actual);
+        }
+
+        [TestMethod]
+        public void CanFilterInvalidTimeFormat()
+        {
+            Reader reader = new Reader();
+            List<Tuple<string, string>> timeList = new List<Tuple<string, string>>();
+            timeList.Add(new Tuple<string, string>("NA", "Dublin"));
+            timeList.Add(new Tuple<string, string>("0a:3j", "London"));
+            timeList.Add(new Tuple<string, string>("23:03", "Samoa"));
+
+            List<Tuple<string, string>> expectedList = new List<Tuple<string, string>>();
+            expectedList.Add(new Tuple<string, string>("23:03", "Samoa"));
+
+
+            CollectionAssert.AreEqual(expectedList, reader.FilterInvalidTimeFormat(timeList));
         }
 
     }
