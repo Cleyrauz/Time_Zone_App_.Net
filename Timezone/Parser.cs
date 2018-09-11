@@ -10,9 +10,10 @@ namespace Timezone
     {
         public void DisplayTime(string time, string timezone)
         {
-            DateTime dateTime = Convert.ToDateTime(time);
-            DateTime convertedTime = TimeZoneInfo.ConvertTime(dateTime, getTimeZoneFromCity(timezone));
-            System.Diagnostics.Debug.WriteLine("The time in the UK is " + time + " and the time in " + timezone + " is " + convertedTime);
+            DateTime timeToConvert = Convert.ToDateTime(time);
+            DateTime convertedTime = TimeZoneInfo.ConvertTime(timeToConvert, getTimeZoneFromCity(timezone));
+            string convertedTimeFormated = convertedTime.ToString("HH:mm");
+            System.Diagnostics.Debug.WriteLine("The time in the UK is " + time + " and the time in " + timezone + " is " + convertedTimeFormated);
         }
 
         public TimeZoneInfo getTimeZoneFromCity(string cityName)
