@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Timezone;
@@ -46,6 +47,21 @@ namespace TimezoneTest
             string[] actual = reader.splitFileByLine(path);
 
             Assert.AreEqual(8, actual.Length);
+        }
+
+        [TestMethod]
+        public void CanLoadTimeZoneList()
+        {
+            Reader reader = new Reader();
+            string[] timesFromFile = { "09:30 Amsterdam", "17:29 Minsk", "23:03 Samoa" };
+            List<Tuple<string, string>> expectedList = new System.Collections.Generic.List<Tuple<string, string>>();
+            expectedList.Add(new Tuple<string, string>("09:30", "Amsterdam"));
+            expectedList.Add(new Tuple<string, string>("17:29", "Minsk"));
+            expectedList.Add(new Tuple<string, string>("23:03", "Samoa"));
+
+            List<Tuple<string, string>> actual = reader.loadListOfTimes(timesFromFile);
+
+            CollectionAssert.AreEqual(expectedList, actual);
         }
 
     }

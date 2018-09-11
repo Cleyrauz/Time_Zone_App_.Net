@@ -17,14 +17,22 @@ namespace Timezone
             if (fileExists(path))
             {
                 string[] fileParts = splitFileByLine(path);
-                foreach (string part in fileParts)
-                {
-                    string[] sLineParts = part.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                lReturn = loadListOfTimes(fileParts);
+            }
 
-                    Tuple<string, string> timeZone = new Tuple<string, string>(sLineParts.First(), sLineParts.Last());
+            return lReturn;
+        }
 
-                    lReturn.Add(timeZone);
-                }
+        public List<Tuple<string, string>> loadListOfTimes(string[] fileParts)
+        {
+            List<Tuple<string, string>> lReturn = new List<Tuple<string, string>>();
+            foreach (string part in fileParts)
+            {
+                string[] sLineParts = part.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                Tuple<string, string> timeZone = new Tuple<string, string>(sLineParts.First(), sLineParts.Last());
+
+                lReturn.Add(timeZone);
             }
 
             return lReturn;
