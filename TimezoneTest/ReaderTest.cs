@@ -29,5 +29,13 @@ namespace TimezoneTest
             Assert.IsFalse(reader.fileExists(path));
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FileNullOrEmpty_ThrowArgumentNullException()
+        {
+            Reader reader = new Reader();
+            reader.fileExists("");
+        }
+
     }
 }
