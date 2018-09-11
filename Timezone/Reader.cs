@@ -71,7 +71,7 @@ namespace Timezone
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error: " + time.Item1 + " is an invalid Time.");
+                    System.Diagnostics.Debug.WriteLine("Error: " + time.Item1 + " is an invalid Time.");
                 }
             }
 
