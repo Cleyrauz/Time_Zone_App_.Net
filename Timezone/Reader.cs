@@ -16,8 +16,7 @@ namespace Timezone
             List<Tuple<string, string>> lReturn = null;
             if (fileExists(path))
             {
-                string[] fileParts = File.ReadAllText("Timezone.txt").Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-
+                string[] fileParts = splitFileByLine(path);
                 foreach (string part in fileParts)
                 {
                     string[] sLineParts = part.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -29,6 +28,11 @@ namespace Timezone
             }
 
             return lReturn;
+        }
+
+        public string[] splitFileByLine(string path)
+        {
+            return File.ReadAllText(path).Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
         }
 
         public bool fileExists(string fileName)

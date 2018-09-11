@@ -37,5 +37,16 @@ namespace TimezoneTest
             reader.fileExists("");
         }
 
+        [TestMethod]
+        public void CanSplitFileByLine()
+        {
+            string fileName = "Timezone.txt";
+            string path = Path.Combine(Environment.CurrentDirectory, PATH_TO_FILE, fileName);
+            Reader reader = new Reader();
+            string[] actual = reader.splitFileByLine(path);
+
+            Assert.AreEqual(8, actual.Length);
+        }
+
     }
 }
