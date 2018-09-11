@@ -15,6 +15,13 @@ namespace Timezone
             using (Reader fileReader = new Reader())
             {
                 List<Tuple<string, string>> lTimes = fileReader.Read("Timezone.txt");
+                if (lTimes != null)
+                {
+                    foreach (Tuple<string, string> time in lTimes)
+                    {
+                        timeZoneParser.DisplayTime(time.Item1, time.Item2);
+                    }
+                }
             }
         }
     }
