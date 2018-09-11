@@ -14,7 +14,7 @@ namespace Timezone
             Parser timeZoneParser = new Parser();
             using (Reader fileReader = new Reader())
             {
-                List<Tuple<string, string>> lTimes = fileReader.Read();
+                List<Tuple<string, string>> lTimes = fileReader.Read("Timezone.txt");
             }
         }
     }

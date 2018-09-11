@@ -7,25 +7,40 @@ using System.Threading.Tasks;
 
 namespace Timezone
 {
-    class Reader : IReader, IDisposable
+    public class Reader : IReader, IDisposable
     {
-        public List<Tuple<string, string>> Read()
+
+        public List<Tuple<string, string>> Read(string fileName)
         {
-            List<Tuple<string, string>> lReturn = new List<Tuple<string, string>>();
-
-            string[] fileParts = File.ReadAllText("Timezone.txt").Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (string part in fileParts)
+            string path = Path.Combine(Environment.CurrentDirectory, @"..\..\", fileName);
+            List<Tuple<string, string>> lReturn = null;
+            if (fileExists(path))
             {
-                string[] sLineParts = part.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] fileParts = File.ReadAllText("Timezone.txt").Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
-                Tuple<string, string> timeZone = new Tuple<string, string>(sLineParts.First(), sLineParts.Last());
+                foreach (string part in fileParts)
+                {
+                    string[] sLineParts = part.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-                lReturn.Add(timeZone);
+                    Tuple<string, string> timeZone = new Tuple<string, string>(sLineParts.First(), sLineParts.Last());
+
+                    lReturn.Add(timeZone);
+                }
             }
 
             return lReturn;
         }
+
+        public bool fileExists(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                throw new ArgumentNullException(fileName);
+            }
+
+            return File.Exists(fileName);
+        }
+
         public void Dispose()
         {
         }

@@ -8,6 +8,6 @@ namespace Timezone
 {
     interface IReader
     {
-        List<Tuple<string, string>> Read();
+        List<Tuple<string, string>> Read(string fileName);
     }
 }
